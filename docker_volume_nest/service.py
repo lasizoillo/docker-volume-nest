@@ -1,11 +1,9 @@
 import logging
 from functools import wraps
 
-import confight
 from flask import Flask
 from flask import jsonify
 from flask import request
-from gunicorn.six import iteritems
 from gunicorn.app.base import BaseApplication
 
 from docker_volume_nest.defaults import DEFAULTS
@@ -62,6 +60,7 @@ def normalize(f):
     @wraps(f)
     def inner_function(*args, **kwargs):
         data = f(*args, **kwargs)
+        print(data)
         if 'Err' in data and data['Err'] != "":
             code = 400
         else:
@@ -303,7 +302,6 @@ def shutdown():
 
 
 class StandaloneApplication(BaseApplication):
-
     def __init__(self, app, options=None):
         self.options = options or {}
         self.application = app
@@ -319,15 +317,9 @@ class StandaloneApplication(BaseApplication):
         return self.application
 
 
-def serve_app(app_name):
-    config = confight.load_app(app_name)
-    plugin_config = config.get("plugin", DEFAULTS["plugin"])
-    provisioner_section = plugin_config.pop("provisioner", "provisioner")
-    provisioner_config = config.get(
-        provisioner_section,
-        DEFAULTS[provisioner_section]
-    )
-    volmer = VolumeManager(provisioner_config)
+def serve_app(config):
+    plugin_config = config.get("service")
+    volmer = VolumeManager(config)
     app.config['volmer'] = volmer
 
     try:

@@ -1,73 +1,26 @@
+__all__ = ["DEFAULTS"]
+
+
+def cmd(name):
+    return "/usr/share/docker_volume_nest/examples/skel/{}.sh".format(
+        name
+    )
+
+
 DEFAULTS = {
-    "plugin": {
+    "service": {
         "bind": "unix:/run/docker/plugins/nest.sock",
     },
-    "provisioner": {
-        "tmpl": {
-            "dataset": {
-                "body": "{{dataset_root}}/{{volname}}",
-            },
-            "cmd_options": {
-                "body": "{% for k,v in options.items() %} -o k=v {% endfor %}",
-                "params": ["options"]
-            },
-            "mountpoint": {
-                "body": "{{mount_root}}/{{volname}}"
-            }
-        },
-        "cfg": {
-            "dataset_root": "tank/docker-volumes",
-            "mount_root": "tank/docker-volumes",
-            "default_options": {
-            },
-            "default_init_options": {
-                "sharenfs": "on"
-            },
-            "nfs_server": "localhost",
-            "nfs_options": "-o hard,nolock"
-        },
-        "cmd": {
-            "init": "zfs create -p {{dataset()}} {{cmd_options(default_init_options)}}",
-            "create": "zfs create -p {{dataset()}} {{cmd_options(options)}} {{cmd_options(default_options)}}",
-            "list": "zfs list -r -t filesystem -o name -H {{dataset()}}",
-            "path": "{{mountpoint()}}",
-            "remove": "echo zfs destroy -r {{dataset()}}",
-            "mount": "",
-            "umount": "",
-        }
+    "environment": {
     },
-    "provisioner_remote": {
-        "tmpl": {
-            "dataset": {
-                "body": "{{dataset_root}}/{{volname}}",
-            },
-            "cmd_options": {
-                "body": "{% for k,v in options.items() %} -o k=v {% endfor %}",
-                "params": ["options"]
-            },
-            "mountpoint": {
-                "body": "{{mount_root}}/{{volname}}"
-            }
-        },
-        "cfg": {
-            "dataset_root": "tank/docker-volumes",
-            "mount_root": "/mnt/docker-volumes",
-            "default_options": {
-            },
-            "default_init_options": {
-                "sharenfs": "on"
-            },
-            "nfs_server": "localhost",
-            "nfs_options": "-o hard,nolock"
-        },
-        "cmd": {
-            "init": "ssh {{nfs_server}} zfs create -p {{dataset()}} {{cmd_options(default_init_options)}}",
-            "create": "ssh {{nfs_server}} zfs create -p {{dataset()}} {{cmd_options(options)}} {{cmd_options(default_options)}}",
-            "list": "showmount --no-headers -e {{nfs_ser",
-            "path": "{{mountpoint()}}",
-            "remove": "echo zfs destroy -r {{dataset()}}",
-            "mount": "mkdir -p mountpoint(); mount {{nfs_options}}:/{{dataset()}} {{mountpoint()}}",
-            "umount": "umount {{mountpoint()}}; rmdir {{mountpoint()}}",
-        }
-    }
+    "cmd": {
+        "init": cmd("init"),
+        "create": cmd("create"),
+        "list": cmd("list"),
+        "path": cmd("path"),
+        "remove": cmd("remove"),
+        "mount": cmd("mount"),
+        "umount": cmd("umount"),
+        "scope": cmd("scope"),
+    },
 }

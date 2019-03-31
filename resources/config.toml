@@ -1,8 +1,0 @@
-[plugin]
-# provisioner = provisioner_remote
-bind="unix:/run/docker/plugins/nest.sock"
-
-[provisioner]
-
-
-[provisioner_slave]

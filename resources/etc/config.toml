@@ -1,0 +1,26 @@
+[service]
+bind="unix:/run/docker/plugins/nest.sock"
+
+[environment]
+
+[cmd]
+init = "/usr/share/docker_volume_nest/examples/skel/init.sh"
+create = "/usr/share/docker_volume_nest/examples/skel/create.sh"
+list = "/usr/share/docker_volume_nest/examples/skel/list.sh"
+path = "/usr/share/docker_volume_nest/examples/skel/path.sh"
+remove = "/usr/share/docker_volume_nest/examples/skel/remove.sh"
+mount = "/usr/share/docker_volume_nest/examples/skel/mount.sh"
+umount = "/usr/share/docker_volume_nest/examples/skel/umount.sh"
+scope = "/usr/share/docker_volume_nest/examples/skel/scope.sh"
+
+
+## Copy and uncoment as confight droplet to avoid diffs on package updates
+# [cmd]
+# init = "/etc/docker_volume_nest/cmd/init.sh"
+# create = "/usr/share/docker_volume_nest/cmd/create.sh"
+# list = "/usr/share/docker_volume_nest/cmd/list.sh"
+# path = "/usr/share/docker_volume_nest/cmd/path.sh"
+# remove = "/usr/share/docker_volume_nest/cmd/remove.sh"
+# mount = "/usr/share/docker_volume_nest/cmd/mount.sh"
+# umount = "/usr/share/docker_volume_nest/cmd/umount.sh"
+# scope = "/usr/share/docker_volume_nest/cmd/scope.sh"
