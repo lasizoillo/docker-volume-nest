@@ -1,0 +1,6 @@
+pytest
+pytest-cov
+pyHamcrest
+git+git://git.xcade.net/pyreview#egg=pyreview
+mypy
+yapf

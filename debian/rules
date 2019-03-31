@@ -1,0 +1,15 @@
+#!/usr/bin/make -f
+
+export DH_VIRTUALENV_INSTALL_ROOT=/opt/
+
+%:
+	dh $@ --tests-pytest --with python-virtualenv --python /usr/bin/python3 --with systemd 
+
+override_dh_compress:
+	dh_compress --exclude=README.md
+
+override_dh_installman:
+	mkdir -p docs
+	pandoc README.md --standalone -f markdown -t man > docs/docker_volume_nest.1
+	dh_installman --all
+

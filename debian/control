@@ -1,0 +1,18 @@
+Source: docker-volume-nest
+Section: devel
+Priority: extra
+Maintainer: lasizoillo <lasizoillo@gmail.com>
+Standards-Version: 4.0.0
+Homepage: lasizoillo
+Build-Depends: debhelper (>= 9),
+               dh-exec,dh-systemd,pandoc,dh-python,
+               dh-virtualenv (>= 1.0),
+               python3,
+               python3-setuptools,
+               python3-pip,
+
+Package: docker-volume-nest
+Architecture: all
+Pre-Depends: dpkg (>= 1.18), ${python:Depends},
+Depends:
+Description: Manage volumes for a simple docker swarm deploy
