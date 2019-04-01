@@ -1,9 +1,8 @@
 #!/bin/bash -eu
 # Mount volumes. Use stderr for errors and stdout to show path where file is mounted
-declare base_path=${BASE_PATH:-/mnt/nest}
-declare base_mount=${BASE_MOUNT:-/mnt/docker-volume}
+declare base_mnt_dataset=${ZFS_BASE_MNT_DATASET:-/tank/docker-volumes}
 declare volname=$1
-declare mount_point="${base_mount}/${volname}"
+declare mount_point="${base_mnt_dataset}/${volname}"
 
-mount -t alien_tech -o dataset="${base_path}/${volname}" ${mount_point} > /dev/null
+# Nothing to do, datasetes mounts are automatic
 echo ${mount_point}

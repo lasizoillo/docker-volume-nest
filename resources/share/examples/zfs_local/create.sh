@@ -8,4 +8,4 @@ declare options=$2
 
 declare opts=$(cat <(echo -e "$options") | sed 's#^\(.\+\)#-o \1#' | tr -s '\n' ' ')
 
-echo zfs create -p "${base_dataset}/${volname}" ${default_opts} $opts
+zfs create -p "${base_dataset}/${volname}" ${default_opts} $opts
